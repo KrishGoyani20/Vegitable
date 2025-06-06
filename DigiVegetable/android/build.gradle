@@ -17,7 +17,7 @@ buildscript {
         classpath("org.jetbrains.kotlin:kotlin-gradle-plugin")
 
         // new code
-        classpath 'com.google.gms:google-services:4.3.10' 
+         classpath 'com.google.gms:google-services:4.3.15'
         // new code
 
     }
@@ -25,5 +25,5 @@ buildscript {
 
 apply plugin: "com.facebook.react.rootproject"
 // new code
-apply plugin: 'com.google.gms.google-services'
+// id 'com.google.gms.google-services' version '4.4.2' apply false
 // new code

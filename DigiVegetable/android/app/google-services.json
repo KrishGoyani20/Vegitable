@@ -1,13 +1,13 @@
 {
   "project_info": {
-    "project_number": "406589162099",
-    "project_id": "digi-vegitable",
-    "storage_bucket": "digi-vegitable.firebasestorage.app"
+    "project_number": "704929461501",
+    "project_id": "digivegetable",
+    "storage_bucket": "digivegetable.firebasestorage.app"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:406589162099:android:a56829d2765f6b48156006",
+        "mobilesdk_app_id": "1:704929461501:android:f6cfcac3a181e113453a94",
         "android_client_info": {
           "package_name": "com.digivegetable"
         }
@@ -15,7 +15,7 @@
       "oauth_client": [],
       "api_key": [
         {
-          "current_key": "AIzaSyDbhAvkxjnKw5saZhM1LEBz5JfNGNye_4s"
+          "current_key": "AIzaSyDX68aOwPSKpNVS84G0qEQdeIV9AGs3XUs"
         }
       ],
       "services": {

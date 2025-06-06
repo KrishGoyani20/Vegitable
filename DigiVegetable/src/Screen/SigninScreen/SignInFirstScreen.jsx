@@ -4,7 +4,6 @@ import {
   Image,
   Pressable,
   SafeAreaView,
-  ScrollView,
   StatusBar,
   StyleSheet,
   Text,
@@ -12,116 +11,140 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import Images from '../../Image/Index';
+import {useDispatch, useSelector} from 'react-redux';
+import {createUser} from '../../Redux/Slice/AuthSlice';
 
 const SignInFirstScreen = ({navigation}) => {
+  const [email, SetEmail] = useState('');
+  const [password, SetPassword] = useState('');
+
+  const dispatch = useDispatch();
+
   useEffect(() => {
     const backAction = () => {
       return true;
     };
-
     const backHandler = BackHandler.addEventListener(
       'hardwareBackPress',
       backAction,
     );
-
     return () => backHandler.remove();
   }, []);
+
+  const handleSignIn = () => {
+    if (email != '' && password != '') {
+      const checkUser = useSelector(state => state.auth.userDetails);
+      if (
+        checkUser &&
+        checkUser.email === email &&
+        checkUser.password === password
+      ) {
+        console.log('User already exist. Please login.');
+        dispatch(createUser(userData));
+        navigation.navigate('TabNavigation');
+        return;
+      }
+    } else {
+      console.log('Please enter email and password');
+    }
+  };
 
   return (
     <SafeAreaView style={styles.container}>
       <StatusBar backgroundColor={'#ffffff'} barStyle={'dark-content'} />
-
-      {/* <FlatList
+      <FlatList
         data={[]}
-        ListHeaderComponent={ */}
-
-      <ScrollView
-        contentContainerStyle={styles.scrollViewContainer}
-        keyboardShouldPersistTaps="handled">
-        <View style={styles.innerContent}>
-          <View style={styles.LimageMain}>
-            <Image style={styles.Limage} source={Images.LoginFirst} />
-          </View>
-
-          <View style={styles.SecBarMain}>
-            <View style={styles.SecTextMain}>
-              <Text style={styles.WBText}>Welcome Back!</Text>
-              <Text style={styles.SmallText}>
-                Log in with your data that you intered during your registration.
-              </Text>
+        ListHeaderComponent={
+          <View>
+            <View style={styles.LimageMain}>
+              <Image style={styles.Limage} source={Images.LoginFirst} />
             </View>
 
-            <View style={styles.userInput}>
-              <View style={styles.InputMain}>
-                <MaterialCommunityIcons
-                  name="email"
-                  size={30}
-                  color={'#B8B5C3'}
-                  style={styles.InputIcon}
-                />
-                <TextInput
-                  style={styles.input}
-                  placeholder="Email Address"
-                  placeholderTextColor={'#B8B5C3'}
-                  keyboardType="email-address"
-                />
+            <View style={styles.SecBarMain}>
+              <View style={styles.SecTextMain}>
+                <Text style={styles.WBText}>Welcome Back!</Text>
+                <Text style={styles.SmallText}>
+                  Log in with your data that you intered during your
+                  registration.
+                </Text>
               </View>
 
-              <View style={styles.InputMain}>
-                <MaterialCommunityIcons
-                  name="lock-outline"
-                  size={30}
-                  color={'#B8B5C3'}
-                  style={styles.InputIcon}
-                />
-                <TextInput
-                  style={styles.input}
-                  placeholder="Password"
-                  placeholderTextColor={'#B8B5C3'}
-                  keyboardType="desault"
-                  secureTextEntry={true}
-                />
-              </View>
-
-              <View style={styles.extraLine}>
-                <View style={styles.roundMain}>
-                  <Pressable>
-                    <View style={styles.round} />
-                  </Pressable>
-                  <Text style={styles.ELtext}>Remember Me</Text>
+              <View style={styles.userInput}>
+                <View style={styles.InputMain}>
+                  <MaterialCommunityIcons
+                    name="email"
+                    size={30}
+                    color={'#B8B5C3'}
+                    style={styles.InputIcon}
+                  />
+                  <TextInput
+                    style={styles.input}
+                    placeholder="Email Address"
+                    placeholderTextColor={'#B8B5C3'}
+                    keyboardType="email-address"
+                    value={email}
+                    onChangeText={value => SetEmail(value)}
+                  />
                 </View>
 
-                <Pressable
-                  style={styles.forgotMain}
-                  onPress={() => navigation.navigate('SignInForgotPassscreen')}>
-                  <Text style={styles.forgotText}>Forgot Password?</Text>
-                </Pressable>
+                <View style={styles.InputMain}>
+                  <MaterialCommunityIcons
+                    name="lock-outline"
+                    size={30}
+                    color={'#B8B5C3'}
+                    style={styles.InputIcon}
+                  />
+                  <TextInput
+                    style={styles.input}
+                    placeholder="Password"
+                    placeholderTextColor={'#B8B5C3'}
+                    keyboardType="desault"
+                    secureTextEntry={true}
+                    value={password}
+                    onChangeText={value => SetPassword(value)}
+                  />
+                </View>
+
+                <View style={styles.extraLine}>
+                  <View style={styles.roundMain}>
+                    <Pressable>
+                      <View style={styles.round} />
+                    </Pressable>
+                    <Text style={styles.ELtext}>Remember Me</Text>
+                  </View>
+
+                  <Pressable
+                    style={styles.forgotMain}
+                    onPress={() =>
+                      navigation.navigate('SignInForgotPassscreen')
+                    }>
+                    <Text style={styles.forgotText}>Forgot Password?</Text>
+                  </Pressable>
+                </View>
               </View>
-            </View>
 
-            <View style={styles.footer}>
-              <TouchableOpacity
-                style={styles.btnSignin}
-                onPress={() => navigation.navigate('TabNavigation')}>
-                <Text style={styles.fotText}>Sign In</Text>
-              </TouchableOpacity>
+              <View style={styles.footer}>
+                <TouchableOpacity
+                  style={styles.btnSignin}
+                  onPress={() => handleSignIn()}>
+                  <Text style={styles.fotText}>Sign In</Text>
+                </TouchableOpacity>
 
-              <View style={styles.signupMain}>
-                <Text style={styles.signtext}>Don't have an account?</Text>
-                <Pressable
-                  onPress={() => navigation.navigate('SignUpFirstScreen')}>
-                  <Text style={styles.signup}>Sign Up</Text>
-                </Pressable>
+                <View style={styles.signupMain}>
+                  <Text style={styles.signtext}>Don't have an account?</Text>
+                  <Pressable
+                    onPress={() => navigation.navigate('SignUpFirstScreen')}>
+                    <Text style={styles.signup}>Sign Up</Text>
+                  </Pressable>
+                </View>
               </View>
             </View>
           </View>
-        </View>
-        {/* //   } */}
-        {/* /> */}
-      </ScrollView>
+        }
+      />
     </SafeAreaView>
   );
 };
@@ -129,17 +152,7 @@ const SignInFirstScreen = ({navigation}) => {
 export default SignInFirstScreen;
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-  },
-  scrollViewContainer: {
-    flexGrow: 1,
-  },
-  innerContent: {
-    flex: 1,
-    justifyContent: 'center', // or 'flex-start' if you want top alignment
-  },
+  container: {flex: 1, backgroundColor: '#fff'},
   LimageMain: {maxWidth: '100%', maxHeight: '40%'},
   Limage: {objectFit: 'cover', width: '100%', maxHeight: '100%'},
   SecBarMain: {width: '100%', minHeight: '60%'},

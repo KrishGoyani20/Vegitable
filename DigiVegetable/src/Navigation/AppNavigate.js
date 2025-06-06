@@ -54,7 +54,7 @@ const AppNavigate = () => {
             <Stack.Screen name='SignUpFirstScreen' component={SignUpFirstScreen} />
             <Stack.Screen name='SignUpProfileScreen' component={SignUpProfileScreen} />
             <Stack.Screen name='SignUpOTPScreen' component={SignUpOTPScreen} />
-            <Stack.Screen name='SignUpLastScreen' component={SignUpLastScreen} />
+            <Stack.Screen name='SignUpLastScreen' component={SignUpLastScreen} />   
 
             {/* basket Scrren Recode */}
             <Stack.Screen name='BasketChekout' component={BasketChekout} />

@@ -13,7 +13,7 @@ import React, {useState} from 'react';
 import Images from '../../../Image/Index';
 import PhoneInput from 'react-native-phone-number-input';
 
-const EditProfile = ({navigation}) => {
+const ProfileScreen = ({navigation}) => {
   const [birthdate, setBirthdate] = useState(new Date());
   const [showPicker, setShowPicker] = useState(false);
   const [formattedDate, setFormattedDate] = useState('');
@@ -122,7 +122,7 @@ const EditProfile = ({navigation}) => {
   );
 };
 
-export default EditProfile;
+export default ProfileScreen;
 
 const styles = StyleSheet.create({
   container: {flex: 1, backgroundColor: '#fff'},

@@ -21,7 +21,7 @@ const TabNavigation = () => {
 
 
   const data = useSelector(state => state.cartData.cart);
-  console.log(' cart item length on tab screen', data.length);
+  // console.log(' cart item length on tab screen', data.length);
   const cartItemCount = data.length;
 
   return (

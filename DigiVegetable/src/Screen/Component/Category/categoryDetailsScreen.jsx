@@ -19,13 +19,16 @@ const CategoryDetailsScreen = ({navigation, route}) => {
   const [btnPressed, setBtnPressed] = useState('Add to Cart');
 
   const data = useSelector(state => state.cartData.cart);
+  console.log('Data', data);
+  console.log('Data Quantity', data.quantity);
+
   const dispatch = useDispatch();
 
   const handleSelectButtonType = type => {
     setBtnPressed(type);
-    if (type === 'Add to Cart') {
-      navigation.navigate('CategoryReviewScreen');
-    }
+    // if (type === 'Add to Cart') {
+    //   navigation.navigate('CategoryReviewScreen');
+    // }
   };
 
   const ProductDetails = () => {
@@ -86,11 +89,23 @@ const CategoryDetailsScreen = ({navigation, route}) => {
                     onPress={() => dispatch(RemoveCart({id: product.id}))}>
                     <Image style={styles.AddSub} source={Images.Sub} />
                   </TouchableOpacity>
-
-                  <Text style={styles.QuntityText}>{data.Quantity || 0}</Text>
-
+                  <Text style={styles.QuntityText}>
+                    {product.quantity || 0}
+                  </Text>
                   <TouchableOpacity
-                    onPress={() => dispatch(AddtoCart({id: product.id}))}>
+                    onPress={() =>
+                      dispatch(
+                        AddtoCart({
+                          id: product.id,
+                          image: product.image,
+                          name: product.name,
+                          kg: product.kg,
+                          price: product.price,
+                          bgColor: product.bgColor,
+                          quantity: 1,
+                        }),
+                      )
+                    }>
                     <Image style={styles.AddSub} source={Images.Add} />
                   </TouchableOpacity>
                 </View>

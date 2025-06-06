@@ -11,14 +11,21 @@ import {
 import React, {useState} from 'react';
 import Images from '../../Image/Index';
 import Modal from 'react-native-modal';
+import {useDispatch} from 'react-redux';
+import {UserLogOut} from '../../Redux/Slice/AuthSlice';
 
 const ProfileScreen = ({navigation}) => {
   const [modalVisible, setModalVisible] = useState(false);
 
   const [btnPressed, setBtnPressed] = useState('Yes, Log Out');
+  const dispatch = useDispatch();
 
   const handleSelectButtonType = type => {
     setBtnPressed(type);
+    if (type === 'Yes, Log Out') {
+      dispatch(UserLogOut());
+      navigation.navigate('SignInFirstScreen');
+    }
   };
   const ProfileDetails = () => (
     <View style={styles.DetailsMainView}>
@@ -77,7 +84,9 @@ const ProfileScreen = ({navigation}) => {
 
         <TouchableOpacity
           style={styles.DetailMain}
-          onPress={() => setModalVisible(true)}>
+          onPress={async () => {
+            setModalVisible(true);
+          }}>
           <Image style={styles.Icon} source={Images.PNotification} />
           <Text style={[styles.TextDetail, {color: 'red'}]}>Logout</Text>
           <Image style={styles.Icon} source={Images.right} />

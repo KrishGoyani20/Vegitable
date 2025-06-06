@@ -10,12 +10,19 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import Images from '../../Image/Index';
+import {useDispatch, useSelector} from 'react-redux';
+import {createUser} from '../../Redux/Slice/AuthSlice';
 
 const SignUpFirstScreen = ({navigation}) => {
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const dispatch = useDispatch();
+  const user = useSelector(state => state.auth.user);
+
   useEffect(() => {
     const backAction = () => {
       return true;
@@ -29,11 +36,25 @@ const SignUpFirstScreen = ({navigation}) => {
     return () => backHandler.remove();
   }, []);
 
+  const handleSignUp = () => {
+    if (email != '' && password != '') {
+      const userData = {
+        id: Date.now(),
+        email,
+        password,
+      };
+
+      dispatch(createUser(userData));
+      navigation.navigate('SignUpProfileScreen');
+    } else {
+      console.log('Please enter email and password');
+    }
+  };
+
   return (
-    // <SafeAreaView style={styles.container}>
-    <View>
+    <SafeAreaView style={styles.container}>
       <StatusBar backgroundColor={'#ffffff'} barStyle={'dark-content'} />
-      <ScrollView >
+      <ScrollView>
         <View style={styles.LimageMain}>
           <Image style={styles.Limage} source={Images.SF} />
         </View>
@@ -59,6 +80,8 @@ const SignUpFirstScreen = ({navigation}) => {
                 placeholder="Email Address"
                 placeholderTextColor={'#B8B5C3'}
                 keyboardType="email-address"
+                value={email}
+                onChangeText={setEmail}
               />
             </View>
 
@@ -69,12 +92,14 @@ const SignUpFirstScreen = ({navigation}) => {
                 color={'#B8B5C3'}
                 style={styles.InputIcon}
               />
+
               <TextInput
                 style={styles.input}
                 placeholder="Password"
                 placeholderTextColor={'#B8B5C3'}
-                keyboardType="desault"
                 secureTextEntry={true}
+                value={password}
+                onChangeText={setPassword}
               />
             </View>
 
@@ -93,7 +118,7 @@ const SignUpFirstScreen = ({navigation}) => {
           <View style={styles.footer}>
             <TouchableOpacity
               style={styles.btnSignin}
-              onPress={() => navigation.navigate('SignUpProfileScreen')}>
+              onPress={handleSignUp}>
               <Text style={styles.fotText}>Sign Up</Text>
             </TouchableOpacity>
 
@@ -107,8 +132,7 @@ const SignUpFirstScreen = ({navigation}) => {
           </View>
         </View>
       </ScrollView>
-      </View>
-    // </SafeAreaView>
+    </SafeAreaView>
   );
 };
 
@@ -189,3 +213,4 @@ const styles = StyleSheet.create({
   signtext: {fontSize: 14, textAlign: 'center'},
   signup: {fontSize: 14, color: '#00D642'},
 });
+

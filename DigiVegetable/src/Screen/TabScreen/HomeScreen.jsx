@@ -31,7 +31,7 @@ const HomeScreen = ({navigation}) => {
     {id: 43, title: 'Pineapple'},
     {id: 44, title: 'BellRed'},
     {id: 45, title: 'Orange'},
-    {id: 46, title: 'potato'},
+    {id: 46, title: 'Potato'},
     {id: 47, title: 'Nescafe'},
   ];
 
@@ -79,7 +79,7 @@ const HomeScreen = ({navigation}) => {
       </View>
     );
   };
-  
+
   const MostPopular = () => {
     return (
       <View>
@@ -191,7 +191,11 @@ const HomeScreen = ({navigation}) => {
         data={topCategory}
         renderItem={({item}) => {
           return (
-            <View style={styles.squareItemContainer}>
+            <TouchableOpacity
+              style={styles.squareItemContainer}
+              onPress={() =>
+                navigation.navigate('categoryDetailsScreen', {product: item})
+              }>
               <View
                 style={[styles.squareItem, {backgroundColor: item.bgColor}]}>
                 <View style={styles.squareImageMain}>
@@ -201,7 +205,7 @@ const HomeScreen = ({navigation}) => {
               <View>
                 <Text style={styles.TopCatName}>{item.name}</Text>
               </View>
-            </View>
+            </TouchableOpacity>
           );
         }}
         keyExtractor={item => item.id.toString()}
@@ -294,7 +298,7 @@ const HomeScreen = ({navigation}) => {
       <FlatList
         data={[]}
         ListHeaderComponent={
-          <View>
+          <View style={{marginHorizontal: 7}}>
             <View style={styles.header}>
               <View style={styles.logomain}>
                 <Image style={styles.LogoImage} source={Images.HLogo} />
@@ -325,7 +329,7 @@ const HomeScreen = ({navigation}) => {
                 <View style={styles.SearchMain}>
                   <Image style={styles.searchIcon} source={Images.search} />
                   <View style={styles.inputsearch}>
-                    <Text>Search</Text>{' '}
+                    <Text>Search</Text>
                   </View>
                   <Image style={styles.searchIcon} source={Images.filter} />
                 </View>

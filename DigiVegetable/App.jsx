@@ -20,3 +20,18 @@ const App = () => {
 export default App;
 
 const styles = StyleSheet.create({});
+
+
+// import { View, Text } from 'react-native'
+// import React from 'react'
+// import Dummy from './src/Screen/Dummy'
+
+// const App = () => {
+//   return (
+//     <View>
+//    <Dummy />
+//     </View>
+//   )
+// }
+
+// export default App
